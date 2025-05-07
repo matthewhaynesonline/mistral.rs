@@ -161,10 +161,6 @@ pub struct Args {
     #[arg(long)]
     pub cpu: bool,
 
-    /// Enable web searching for interactive mode.
-    #[arg(long = "interactive-search")]
-    pub interactive_search: bool,
-
     /// Enable searching compatible with the OpenAI `web_search_options` setting. This uses the BERT model specified below or the default.
     #[arg(long = "enable-search")]
     pub enable_search: bool,
@@ -172,6 +168,10 @@ pub struct Args {
     /// Specify a Hugging Face model ID for a BERT model to assist web searching. Defaults to Snowflake Arctic Embed L.
     #[arg(long = "search-bert-model")]
     pub search_bert_model: Option<String>,
+
+    /// Enable thinking for interactive mode and models that support it.
+    #[arg(long = "enable-thinking")]
+    pub enable_thinking: bool,
 }
 
 fn parse_token_source(s: &str) -> Result<TokenSource, String> {
@@ -345,7 +345,7 @@ pub async fn bootstrap_mistralrs_router(
         pipeline,
         scheduler_config,
         args.interactive_mode,
-        bert_model,
+        bert_model.clone(),
         args.log,
         args.truncate_sequence,
         args.no_kv_cache,
