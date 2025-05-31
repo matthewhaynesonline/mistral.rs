@@ -9,4 +9,4 @@ pub mod openai;
 pub mod openapi_doc;
 mod speech_generation;
 pub mod types;
-mod util;
+pub mod util;
